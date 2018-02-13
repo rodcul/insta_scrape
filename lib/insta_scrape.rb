@@ -101,7 +101,7 @@ module InstaScrape
           likes: likes
         })
       else
-        info = InstaScrape::InstagramPost.new(post[:link], post[:image], { text: text })
+        info = InstaScrape::InstagramPost.new(post[:link], post[:image], { text: post[:text] })
       end
       @posts << info
     end
