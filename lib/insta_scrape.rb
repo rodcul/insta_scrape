@@ -86,13 +86,13 @@ module InstaScrape
         text: post.find("img")["alt"]}
     end
 
-    posts.each do |post|
+    posts.first(9).each do |post|
       if include_meta_data
         visit(post[:link])
         date = page.find('time')["datetime"]
-        username = page.first("article header div a")["title"]
+        username = page.first("article header div div a")["title"]
         hi_res_image = page.all("img").last["src"]
-        likes = page.find("div section span span")["innerHTML"]
+        likes = page.first("div section span span")["innerHTML"]
         info = InstaScrape::InstagramPost.new(post[:link], post[:image], {
           date: date,
           text: post[:text],
@@ -194,8 +194,8 @@ module InstaScrape
     post = @posts.sample
     puts "* Printing Sample Post *"
     puts "\n"
-    puts "Image: #{post.image}\n"
     puts "Link: #{post.link}\n"
+    puts "Image: #{post.image}\n"
     puts "Text: #{post.text}\n"
     if post.date
       puts "Date: #{post.date}\n"
