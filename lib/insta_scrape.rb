@@ -14,6 +14,13 @@ module InstaScrape
     scrape_posts(include_meta_data: include_meta_data)
   end
 
+  #get a location
+  def self.location(location, include_meta_data: false)
+    visit "https://www.instagram.com/explore/locations/#{location}/"
+    @posts = []
+    scrape_posts(include_meta_data: include_meta_data)
+  end
+
   #long scrape a hashtag
   def self.long_scrape_hashtag(hashtag, scrape_length, include_meta_data: false)
     visit "https://www.instagram.com/explore/tags/#{hashtag}/"
