@@ -99,7 +99,7 @@ module InstaScrape
         date = page.find('time')["datetime"]
         username = page.first("article header div div a")["title"]
         hi_res_image = page.all("img").last["src"]
-        likes = page.first("div section span span")["innerHTML"]
+        likes = reverse_human_to_number(page.first("div section span span")["innerHTML"])
         info = InstaScrape::InstagramPost.new(post[:link], post[:image], {
           date: date,
           text: post[:text],
@@ -123,14 +123,15 @@ module InstaScrape
   #user info scraper method
   def self.scrape_user_info(username)
     visit "https://www.instagram.com/#{username}/"
+    # byebug
     @image = page.find('article header div img')["src"]
     within("header") do
       post_count_html = page.find('span', :text => "posts", exact: true)['innerHTML']
-      @post_count = get_span_value(post_count_html)
+      @post_count = reverse_human_to_number(get_span_value(post_count_html))
       follower_count_html = page.find('span', :text => "followers", exact: true)['innerHTML']
-      @follower_count = get_span_value(follower_count_html)
+      @follower_count = reverse_human_to_number(get_span_value(follower_count_html))
       following_count_html = page.find('span', :text => "following", exact: true)['innerHTML']
-      @following_count = get_span_value(following_count_html)
+      @following_count = reverse_human_to_number(get_span_value(following_count_html))
       description = page.find(:xpath, '//header/section/div[2]')['innerHTML']
       @description = Nokogiri::HTML(description).text
     end
@@ -229,6 +230,21 @@ module InstaScrape
       raise NoPostsError.new('This account has no posts!')
     else
       false
+    end
+  end
+
+
+  def self.reverse_human_to_number(number)
+    if number.to_i.to_s == number.to_s
+      number.to_i
+    elsif number.match?(/\,\d{3}/o)
+      number.gsub(/,(?=\d{3}\b)/, '').to_i
+    elsif number.include?('k')
+      (number.to_f * 1000).to_i
+    elsif number.include?('m')
+      (number.to_f * 1000000).to_i
+    else
+      nil
     end
   end
 end

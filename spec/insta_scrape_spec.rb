@@ -13,8 +13,12 @@ describe InstaScrape do
   end
 
   it 'connects to user\'s instagram scrapes and maps their info' do
+    scrape_result = InstaScrape.user_info("overstandcoffee")
+    expect(scrape_result.follower_count).to be_between(0, 1000).inclusive
     scrape_result = InstaScrape.user_info("dannyvassallo")
-    expect(scrape_result.follower_count).to_not eq(nil)
+    expect(scrape_result.follower_count).to be_between(1000, 2000).inclusive
+    scrape_result = InstaScrape.user_info("thailanddestiny")
+    expect(scrape_result.follower_count).to be_between(23000, 24000).inclusive
   end
 
   it 'connects to user\'s instagram scrapes and maps their info and posts' do
