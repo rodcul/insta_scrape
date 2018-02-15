@@ -113,9 +113,8 @@ module InstaScrape
       @posts << info
     end
 
-    #log
-    puts "POST COUNT: #{@posts.length}"
-    self.log_posts
+    #log  
+    # self.log_posts
     #return result
     return @posts
   end
