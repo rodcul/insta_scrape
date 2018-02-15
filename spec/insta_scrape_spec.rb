@@ -21,6 +21,11 @@ describe InstaScrape do
     expect(scrape_result.follower_count).to be_between(23000, 24000).inclusive
   end
 
+  it 'can scrape users with following in their bio' do
+    scrape_result = InstaScrape.user_info("pang_wana")
+    expect(scrape_result.following_count).to_not eq(nil)
+  end
+
   it 'connects to user\'s instagram scrapes and maps their info and posts' do
     scrape_result = InstaScrape.user_info_and_posts('foofighters')
     expect(scrape_result.follower_count).to_not eq(nil)
