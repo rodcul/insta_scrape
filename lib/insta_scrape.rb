@@ -122,18 +122,19 @@ module InstaScrape
   #user info scraper method
   def self.scrape_user_info(username)
     visit "https://www.instagram.com/#{username}/"
-    # byebug
     @image = page.find('article header div img')["src"]
     within("header") do
-      post_count_html = page.find('span', :text => "posts", exact: true)['innerHTML']
+      post_count_html = page.find('span', :text => "posts")['innerHTML']
       @post_count = reverse_human_to_number(get_span_value(post_count_html))
-      follower_count_html = page.find('span', :text => "followers", exact: true)['innerHTML']
+      follower_count_html = page.find('span', :text => "followers")['innerHTML']
       @follower_count = reverse_human_to_number(get_span_value(follower_count_html))
-      # byebug
-      following_count_html = page.first('span', :text => "following", exact: true)['innerHTML']
+      following_count_html = page.first('span', :text => "following")['innerHTML']
       @following_count = reverse_human_to_number(get_span_value(following_count_html))
-      description = page.find(:xpath, '//header/section/div[2]')['innerHTML']
-      @description = Nokogiri::HTML(description).text
+
+      if page.has_xpath?('//header/section/div[2]')
+        description = page.find(:xpath, '//header/section/div[2]')['innerHTML']
+        @description = Nokogiri::HTML(description).text
+      end
     end
   end
 

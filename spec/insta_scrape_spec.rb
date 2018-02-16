@@ -26,6 +26,12 @@ describe InstaScrape do
     expect(scrape_result.following_count).to_not eq(nil)
   end
 
+  it 'can scrape users with empty description' do
+    scrape_result = InstaScrape.user_info("petrouv")
+    expect(scrape_result.following_count).to_not eq(nil)
+    expect(scrape_result.description).to eq(nil)
+  end
+
   it 'connects to user\'s instagram scrapes and maps their info and posts' do
     scrape_result = InstaScrape.user_info_and_posts('foofighters')
     expect(scrape_result.follower_count).to_not eq(nil)
