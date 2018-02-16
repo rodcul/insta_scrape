@@ -235,7 +235,7 @@ module InstaScrape
   def self.reverse_human_to_number(number)
     if number.to_i.to_s == number.to_s
       number.to_i
-    elsif number.match?(/\,\d{3}/o)
+    elsif (number =~ /\,\d{3}/o) == 1
       number.gsub(/,(?=\d{3}\b)/, '').to_i
     elsif number.include?('k')
       (number.to_f * 1000).to_i
