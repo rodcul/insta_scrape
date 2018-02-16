@@ -125,7 +125,7 @@ module InstaScrape
     if page.status_code == 200
       @image = page.find('article header div img')['src']
       within('header') do
-        post_count_html = page.find('span', text: 'posts')['innerHTML']
+        post_count_html = page.find('span', text: 'post')['innerHTML']
         @post_count = reverse_human_to_number(get_span_value(post_count_html))
         follower_count_html = page.find('span', text: 'followers')['innerHTML']
         @follower_count = reverse_human_to_number(get_span_value(follower_count_html))
