@@ -10,8 +10,16 @@ describe InstaScrape do
     expect(InstaScrape.reverse_human_to_number("1,000")).to eq(1000)
   end
 
-  it 'Convert 1,001 to 1001' do
-    expect(InstaScrape.reverse_human_to_number("1,001")).to eq(1001)
+  it 'Convert 1,201 to 1201' do
+    expect(InstaScrape.reverse_human_to_number("1,201")).to eq(1201)
+  end
+
+  it 'Convert 15,000 to 15000' do
+    expect(InstaScrape.reverse_human_to_number("15,000")).to eq(15000)
+  end
+
+  it 'Convert 1,500,200 to 1500200' do
+    expect(InstaScrape.reverse_human_to_number("1,500,200")).to eq(1500200)
   end
 
   it 'Convert 23.3k to 23300' do
