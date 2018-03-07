@@ -125,15 +125,15 @@ module InstaScrape
     if page.status_code == 200
       @image = page.find('article header div img')['src']
       within('header') do
-        post_count_html = page.find('span', text: 'post')['innerHTML']
+        post_count_html = page.first('span', text: 'post')['innerHTML']
         @post_count = reverse_human_to_number(get_span_value(post_count_html))
-        follower_count_html = page.find('span', text: 'follower')['innerHTML']
+        follower_count_html = page.first('span', text: 'follower')['innerHTML']
         @follower_count = reverse_human_to_number(get_span_value(follower_count_html))
         following_count_html = page.first('span', text: 'following')['innerHTML']
         @following_count = reverse_human_to_number(get_span_value(following_count_html))
 
         if page.has_xpath?('//header/section/div[2]')
-          description = page.find(:xpath, '//header/section/div[2]')['innerHTML']
+          description = page.first(:xpath, '//header/section/div[2]')['innerHTML']
           @description = Nokogiri::HTML(description).text
         end
       end
