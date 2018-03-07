@@ -133,7 +133,7 @@ module InstaScrape
         @following_count = reverse_human_to_number(get_span_value(following_count_html))
 
         if page.has_xpath?('//header/section/div[2]')
-          description = page.first(:xpath, '//header/section/div[2]')['innerHTML']
+          description = page.find(:xpath, '//header/section/div[2]')['innerHTML']
           @description = Nokogiri::HTML(description).text
         end
       end
